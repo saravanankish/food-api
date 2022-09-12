@@ -8,8 +8,8 @@ export type User = {
     userId?: string,
     username: string,
     password: string,
-    creationDate?: string,
-    modifiedDate?: string,
+    creationDate?: Date,
+    modifiedDate?: Date,
     lastLogin?: string,
     role: "CUSTOMER" | "ADMIN",
     email: string,
@@ -29,4 +29,15 @@ export type Address = {
     street: string,
     contact_number: string,
     userId: string,
+}
+
+export type Item = {
+    itemId: string,
+    title: string,
+    description: string,
+    image: string,
+    price: number,
+    creationDate?: Date,
+    modifiedDate?: Date,
+    images?: Array<string>
 }

@@ -33,6 +33,7 @@ export default {
         CREATE TABLE IF NOT EXISTS items (
             itemId varchar(30) primary key,
             title varchar(60) not null,
+            deleted bit(1) not null default 0,
             \`description\` varchar(200) not null,
             image varchar(255) not null,
             price float4 not null,
@@ -111,12 +112,14 @@ export default {
     `,
     createActionsSchema: `
         CREATE TABLE IF NOT EXISTS actions (
-            id bigint not null primary key,
+            id bigint not null primary key auto_increment,
             userId varchar(30) not null,
             actionType varchar(100) not null,
             orderId varchar(30),
             itemId varchar(30),
             variantId bigint,
+            creationDate timestamp not null default current_timestamp,
+            modifiedDate timestamp not null default current_timestamp on update current_timestamp,
             foreign key (userId) references users(userId),
             foreign key (orderId) references orders(orderId),
             foreign key (itemId) references items(itemId),

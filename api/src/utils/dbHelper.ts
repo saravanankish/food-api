@@ -10,7 +10,7 @@ export const queryWithoutArgs = (query: string): Promise<any> => {
     })
 }
 
-export const queryWithArgs = (query: string, data: Array<string | null>): Promise<any> => {
+export const queryWithArgs = (query: string, data: Array<string | null> | Array<Array<Array<string | null>>>): Promise<any> => {
     return new Promise((resolve: any, reject: any): void => {
         pool.query(query, data, (err: MysqlError | null, result: any) => {
             if (err) reject(err)
