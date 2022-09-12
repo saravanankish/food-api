@@ -1,0 +1,11 @@
+{
+	"port": 8002,
+	"host": "localhost",
+	"dbHost": "localhost",
+	"dbUsername": "root",
+	"dbPassword": "password",
+	"dbName": "food_order",
+	"dbMultipleQuery": true,
+	"bcryptSalts": 5,
+	"authServerUrl": "http://localhost:8001"
+}
