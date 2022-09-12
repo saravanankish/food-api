@@ -1,0 +1,8 @@
+{
+	"port": 8001,
+	"host": "localhost",
+	"dbHost": "localhost",
+	"dbUsername": "root",
+	"dbPassword": "password",
+	"dbName": "food_order"
+}
