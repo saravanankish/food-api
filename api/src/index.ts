@@ -7,14 +7,17 @@ import mainController from "./controller/main.controller"
 import { errorHandler, uriNotFoundHandler } from "./utils/errorHandler"
 import initPassport from "./middleware/passport"
 import initSchema from "./utils/schemaInit"
+import morgan from "morgan"
+import helmet from "helmet"
 
 const app: Application = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(helmet())
+app.use(morgan("dev"))
 app.use(passport.initialize())
 initPassport()
-
 
 app.use("/", mainController);
 
