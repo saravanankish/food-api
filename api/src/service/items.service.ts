@@ -8,6 +8,7 @@ import BSON from "bson";
 import createAction from "../utils/createAction";
 import log from "../logger";
 import { addItemImages, deleteItemImageById } from "./itemImages.service";
+import { mapVariantsToItems } from "./variantItem.service";
 
 export const getAllItems = catchError(async (_: Request, res: Response) => {
     const results = await queryWithoutArgs(itemQuery.getAllItems)
@@ -92,6 +93,7 @@ export const updateItem = catchError(async (req: Request, res: Response) => {
 
 export const deleteItem = catchError(async (req: Request, res: Response) => {
     const itemId: string = req.params.itemId
+    const user: User = req.user as User
 
     if (!itemId) throw new ApiError(400, "Item id is empty")
 
@@ -101,8 +103,25 @@ export const deleteItem = catchError(async (req: Request, res: Response) => {
     const deleteResult = await queryWithArgs(itemQuery.deleteItemById, [itemId])
     if (deleteResult.affectedRows === 1) {
         log.info("Deleted item with id %s successfully", itemId)
+        createAction([user.userId || null, "Deleted item", null, itemId, null])
         res.status(202).send({ success: true, message: "Deleted item successfully" })
     } else {
         throw new ApiError(500, "Cannot delete item")
     }
-}) 
+})
+
+export const addVariantToItem = catchError(async (req: Request, res: Response): Promise<void> => {
+    const itemId: string = req.body.itemId
+    const variantId: string = req.body.variantId
+
+    if (!itemId) throw new ApiError(400, "Item id is empty")
+
+    if (!variantId) throw new ApiError(400, "Variant id is empty")
+
+    const mapped: boolean = await mapVariantsToItems(itemId, variantId)
+    if (mapped) {
+        res.status(201).send({ success: true, message: "Mapped successfully" })
+    } else {
+        throw new ApiError(500, "Couldn't map variant to item")
+    }
+})

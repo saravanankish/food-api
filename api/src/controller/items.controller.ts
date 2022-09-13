@@ -1,7 +1,7 @@
 import express, { Router } from "express"
 import passport from "passport"
 import { auth } from "../middleware/auth"
-import { addItem, deleteItem, getAllItems, updateItem } from "../service/items.service"
+import { addItem, deleteItem, getAllItems, updateItem, addVariantToItem } from "../service/items.service"
 
 const router: Router = express.Router()
 
@@ -9,10 +9,14 @@ router.use(passport.authenticate("jwt", { session: false }))
 
 router.get("/", getAllItems)
 
-router.post("/", auth("ADMIN"), addItem)
+router.use(auth("ADMIN"))
 
-router.put("/:itemId", auth("ADMIN"), updateItem)
+router.post("/", addItem)
 
-router.delete("/:itemId", auth("ADMIN"), deleteItem)
+router.post("/map", addVariantToItem)
+
+router.put("/:itemId", updateItem)
+
+router.delete("/:itemId", deleteItem)
 
 export default router

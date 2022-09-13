@@ -41,3 +41,19 @@ export type Item = {
     modifiedDate?: Date,
     images?: Array<string>
 }
+
+export type Variants = {
+    id: string,
+    title: string,
+    itemId?: string,
+    creationDate?: Date,
+    modifiedDate?: Date,
+    options?: Array<VariantOptions>
+}
+
+export type VariantOptions = {
+    id: number,
+    text: string,
+    price: number,
+    itemVariantsId?: string
+}

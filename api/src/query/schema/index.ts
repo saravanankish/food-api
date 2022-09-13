@@ -51,7 +51,7 @@ export default {
     `,
     createVariantsSchema: `
         CREATE TABLE IF NOT EXISTS variants (
-            id bigint primary key auto_increment,
+            id varchar(30) primary key,
             title varchar(50) not null,
             creationDate timestamp not null default current_timestamp,
             modifiedDate timestamp not null default current_timestamp on update current_timestamp
@@ -62,14 +62,15 @@ export default {
             id bigint primary key auto_increment,
             \`text\` varchar(50) not null,
             price float4 not null,
-            itemVariantsId bigint not null,
+            itemVariantsId varchar(30) not null,
             foreign key (itemVariantsId) references variants(id)
         );
     `,
     createItemVariantsMappingSchema: `
         CREATE TABLE IF NOT EXISTS item_variants_mapping (
+            id bigint primary key auto_increment,
             itemId varchar(30) not null,
-            variantId bigint not null,
+            variantId varchar(30) not null,
             foreign key (itemId) references items(itemId),
             foreign key (variantId) references variants(id)
         );    
@@ -117,7 +118,7 @@ export default {
             actionType varchar(100) not null,
             orderId varchar(30),
             itemId varchar(30),
-            variantId bigint,
+            variantId varchar(30),
             creationDate timestamp not null default current_timestamp,
             modifiedDate timestamp not null default current_timestamp on update current_timestamp,
             foreign key (userId) references users(userId),
