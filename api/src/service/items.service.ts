@@ -21,6 +21,18 @@ export const getAllItems = catchError(async (_: Request, res: Response) => {
     res.status(200).send(results)
 })
 
+export const getItemById = catchError(async (req: Request, res: Response) => {
+    const itemId: string = req.params.itemId
+
+    if (!itemId) throw new ApiError(400, "Item id is empty")
+
+    const item = await queryWithArgs(itemQuery.findItemById, [itemId])
+
+    if (!item) throw new ApiError(404, `Item with id ${itemId} is not found`)
+
+    res.status(200).send(item)
+})
+
 
 export const addItem = catchError(async (req: Request, res: Response) => {
     const items: Item = req.body

@@ -57,3 +57,27 @@ export type VariantOptions = {
     price: number,
     itemVariantsId?: string
 }
+
+
+export type Orders = {
+    orderId: string,
+    customerId: string,
+    total: number,
+    orderStatus: OrderStatus,
+    paymentType: PaymentType,
+    creationDate?: Date,
+    modifiedDate?: Date,
+    orderDate: Date,
+    deliveryDate: Date,
+    deliveryAddress: number | Address,
+    items?: Array<ItemQuantity>
+}
+
+export type ItemQuantity = {
+    id?: number,
+    itemId: string,
+    orderId: string,
+    quantity: number,
+    optionSelected?: Array<number>,
+    item?: Item,
+}

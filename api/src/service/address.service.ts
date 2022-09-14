@@ -18,7 +18,7 @@ export const addAddress = catchError(async (req: Request, res: Response): Promis
         address.pincode,
         address.contact_number,
         address.landmark ? address.landmark : null,
-        address.userId
+        (req.user as User).userId || null,
     ])
 
     if (result.affectedRows === 1) {
@@ -61,7 +61,7 @@ export const updateAddress = catchError(async (req: Request, res: Response): Pro
         address.pincode,
         address.contact_number,
         address.landmark ? address.landmark : null,
-        address.userId,
+        (req.user as User).userId || null,
         addressId ? addressId : ""
     ])
 

@@ -7,5 +7,6 @@
 	"dbName": "food_order",
 	"dbMultipleQuery": true,
 	"bcryptSalts": 5,
-	"authServerUrl": "http://localhost:8001"
+	"authServerUrl": "http://localhost:8001",
+	"minDate": "1800-01-01"
 }

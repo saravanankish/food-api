@@ -93,7 +93,7 @@ export default {
     `,
     createItemQuantityMapperSchema: `
         CREATE TABLE IF NOT EXISTS item_quantity_mapper (
-            id bigint primary key,
+            id varchar(30) primary key,
             itemId varchar(30) not null,
             orderId varchar(30) not null,
             quantity int not null,
@@ -104,7 +104,7 @@ export default {
     createOptionsSelectedSchema: `
         CREATE TABLE IF NOT EXISTS item_options_selected (
             orderId varchar(30) not null,
-            itemQuantityId bigint not null,
+            itemQuantityId varchar(30) not null,
             optionId bigint not null,
             foreign  key (orderId) references orders(orderId),
             foreign key (itemQuantityId) references item_quantity_mapper(id),

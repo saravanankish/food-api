@@ -35,8 +35,6 @@ export const login = catchError(async (req: Request, res: Response, _: NextFunct
 
     const passwordMatched = bcrypt.compareSync(password, user.password)
 
-    console.log(passwordMatched)
-
     if (!passwordMatched) throw new ApiError(400, "Invalid password")
 
     cleanUserData(user)

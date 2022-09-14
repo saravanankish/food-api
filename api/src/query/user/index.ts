@@ -5,4 +5,7 @@ export default {
     selectUserByUsername: `
         SELECT * FROM users WHERE username = ?
     `,
+    getUserById: `
+        SELECT * FROM users WHERE userId = ?
+    `
 }
