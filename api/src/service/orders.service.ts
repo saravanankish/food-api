@@ -115,9 +115,28 @@ export const placeOrder = catchError(async (req: Request, res: Response): Promis
 
 })
 
-export const updateOrderStatus = () => {
-    
-}
+export const updateOrderStatus = catchError(async (req: Request, res: Response) => {
+    const orderStatus: string | number = req.body.orderStatus
+    const orderId: string = req.params.getOrderById
+
+    if (!orderId) throw new ApiError(400, "Order id is empty")
+    if (!orderStatus) throw new ApiError(400, "Order status is not in request body")
+
+    const order = await queryWithArgs(ordersQuery.getOrderById, [orderId])
+
+    if (!order || !order.length) throw new ApiError(404, `Order with id ${orderId} is not present`)
+
+    if ((orderStatus === OrderStatus["DELIVERED"] || orderStatus === OrderStatus[OrderStatus.DELIVERED])) {
+        const orderUpdatedRes = await queryWithArgs(ordersQuery.updateOrderStatusToDelivered, [orderStatus, moment().format("YYYY-MM-DD HH:mm:ss")])
+
+        if (orderUpdatedRes.affectedRows === 1) {
+            log.info("Updated order status to %s of order %s", OrderStatus["DELIVERED"] || OrderStatus[OrderStatus.DELIVERED], orderId)
+            res.status(201).send({ success: true, message: "Updated order status successfully" })
+        } else {
+            throw new ApiError(500, "Couldn't update order status")
+        }
+    }
+})
 
 const getOrder = async (query: string, data: Array<string>): Promise<Array<Orders>> => {
     let orders: Array<Orders> = await queryWithArgs(query, data)

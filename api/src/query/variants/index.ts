@@ -7,5 +7,8 @@ export default {
     `,
     getVariantById: `
         SELECT * FROM variants WHERE id=?
+    `,
+    deleteVariant: `
+        UPDATE variants SET deleted=1 WHERE id=?
     `
 }

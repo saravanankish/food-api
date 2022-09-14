@@ -53,4 +53,26 @@ export const addVariants = catchError(async (req: Request, res: Response) => {
     } else {
         throw new ApiError(500, "Cannot add variants")
     }
-}) 
+})
+
+export const deleteVariant = catchError(async (req: Request, res: Response) => {
+    const variantId: string = req.params.variantId
+
+    if (!variantId) throw new ApiError(400, "Variant id is empty")
+
+    const variantInDb = await queryWithArgs(variantsQuery.getVariantById, [variantId])
+
+    if (!variantInDb || !variantInDb.length) throw new ApiError(404, `Variant with id ${variantId} not found`)
+
+    const deletedVariantRes = await queryWithArgs(variantsQuery.deleteVariant, [variantId])
+
+    if (deletedVariantRes.affectedRows === 1) {
+        log.info("Deleted variant with id %s successfully", variantId)
+        res.status(201).send({ success: true, message: "Deleted variant successfully" })
+    } else {
+        throw new ApiError(500, `Couldn't delete variant with id ${variantId}`)
+    }
+
+
+
+})

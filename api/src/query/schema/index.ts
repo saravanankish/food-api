@@ -63,7 +63,8 @@ export default {
             \`text\` varchar(50) not null,
             price float4 not null,
             itemVariantsId varchar(30) not null,
-            foreign key (itemVariantsId) references variants(id)
+            foreign key (itemVariantsId) references variants(id),
+            deleted bit(1) NOT NULL default 0
         );
     `,
     createItemVariantsMappingSchema: `

@@ -1,6 +1,6 @@
 import express, { Router } from "express"
 import passport from "passport"
-import { getAllOrders, getOrderById, placeOrder } from "../service/orders.service"
+import { getAllOrders, getOrderById, placeOrder, updateOrderStatus } from "../service/orders.service"
 
 const router: Router = express.Router()
 
@@ -11,5 +11,7 @@ router.get("/", getAllOrders)
 router.get("/:orderId", getOrderById)
 
 router.post("/", placeOrder)
+
+router.put("/:orderId", updateOrderStatus)
 
 export default router
