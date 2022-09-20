@@ -7,7 +7,7 @@
 		"start": "node build/index.js",
 		"build": "tsc -p .",
 		"dev": "nodemon src/index.ts",
-		"test": "jest -c ./jest.unit.json --watch"
+		"test": "jest -c ./jest.unit.json"
 	},
 	"author": "Saravanan K",
 	"license": "ISC",
