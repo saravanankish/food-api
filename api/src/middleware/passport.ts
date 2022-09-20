@@ -17,11 +17,16 @@ const cleanUserData = (user: any): void => {
 
 
 const initPassport = async () => {
-    const secret = await jwksClient({
-        jwksUri: config.get("authServerUrl") as string + "/.well-known/jwks.json",
-        cache: true,
-        rateLimit: true,
-    }).getSigningKey()
+    let secret
+    try {
+        secret = await jwksClient({
+            jwksUri: config.get("authServerUrl") as string + "/.well-known/jwks.json",
+            cache: true,
+            rateLimit: true,
+        }).getSigningKey()
+    } catch (err) {
+        throw err
+    }
 
 
 

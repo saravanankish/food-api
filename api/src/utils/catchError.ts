@@ -4,8 +4,8 @@ import ApiError from "./ApiError"
 import log from "../logger"
 
 const catchError = (fn: Function) => {
-    return (req: Request, res: Response, next: NextFunction) => {
-        Promise.resolve(fn(req, res, next)).catch(err => {
+    return async (req: Request, res: Response, next: NextFunction) => {
+        await Promise.resolve(fn(req, res, next)).catch(err => {
             const response: ErrorResponse = {
                 status: 0,
                 message: ""

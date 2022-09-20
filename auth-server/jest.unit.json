@@ -1,0 +1,10 @@
+{
+    "preset": "ts-jest",
+    "coverageDirectory": "./coverage",
+    "testMatch": [
+        "**/?(*.)+(test).ts",
+        "**/?(*.)+(spec).ts"
+    ],
+    "resetMocks": true,
+    "clearMocks": true
+}
